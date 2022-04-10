@@ -1,7 +1,9 @@
 package com.neo.composetipcalculator
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -10,12 +12,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Slider
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,12 +48,42 @@ class MainActivity : ComponentActivity() {
 }
 
 // container composable function (take's another composable function)
+@ExperimentalComposeUiApi
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
     ComposeTipCalculatorTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            content()
+        MyToolBar{
+            Surface(color = MaterialTheme.colors.background) {
+                content()
+            }
         }
+    }
+}
+
+@ExperimentalComposeUiApi
+@Composable
+fun MyToolBar(content: @Composable () -> Unit){
+    val context: Context = LocalContext.current
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                title = {Text("Tip Calculator", color = Color.White)},
+                navigationIcon = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Filled.Home, contentDescription = "Home Icon", tint = Color.White)
+                    }
+                },
+                actions = { IconButton(onClick = { Toast.makeText(context, "Feature coming soon...", Toast.LENGTH_SHORT).show()}) {
+                        Icon(imageVector = Icons.Filled.AddAPhoto, null, tint = Color.White)
+
+                }},
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onBackground
+            )
+
+        })
+    {
+        content()
     }
 }
 
@@ -259,11 +291,12 @@ fun BillForm(
 }
 
 
+@ExperimentalComposeUiApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApp {
-        Text("Hello again")
+        MainContent()
     }
 
 }
