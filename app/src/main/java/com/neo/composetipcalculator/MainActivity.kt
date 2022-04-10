@@ -194,11 +194,6 @@ fun BillForm(
                         keyboardController?.hide()
                     })
                 if (validState) {
-                    totalPerPersonState.value =
-                        calculateTotalPerson(
-                            totalBill = totalBillState.value.toDouble(),
-                            splitBy = splitByState.value, tipPercentage = tipPercentage
-                        )
                     Row(
                         modifier = Modifier.padding(3.dp),
                         horizontalArrangement = Arrangement.Start
